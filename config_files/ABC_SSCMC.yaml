@@ -1,0 +1,45 @@
+experiment_name: SSCMC_0_SMC
+population_modules_path: './ABC_input_files/input_files_SSCMC/population_modules.so'
+inputs_folder: './ABC_input_files/input_files_SSCMC/input_files/'
+output_folder: './output/'
+
+# Start time, end time, time interval
+t_0: 0
+t_end: 1500
+dt: 0.5
+
+final_epsilon:
+  - 500
+  - 25000
+  - 1e-10
+
+fit_species:
+  - 0
+  - 1
+
+initial_epsilon:
+  - 1e250
+  - 1e250
+  - 1e250
+
+abs_tol: 1e-15
+rel_tol: 1e-5
+
+population_size: 25
+n_sims_batch: 10
+
+alpha: 0.5
+
+## Distance options
+# 0: stable steady state
+# 1: oscillations
+# 2: survival
+distance_function_mode: 0
+
+# Choose which algorithm to run
+run_rejection: N
+run_SMC: Y
+
+# Whether to compress output of ABC SMC, will produce a .tar file containing output,
+# it will not delete the directory containing the original information.
+compress_output: Y
