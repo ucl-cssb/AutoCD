@@ -1,7 +1,7 @@
 from ModelSpaceGenerator import run_model_space_generator
 from data_analysis import run_data_analysis
 import subprocess
-
+import os
 import argparse
 import yaml
 from shutil import copy
