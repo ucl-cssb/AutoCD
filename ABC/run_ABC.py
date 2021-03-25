@@ -92,7 +92,7 @@ def main():
     except FileExistsError:
         pass
 
-    exp_output_folder = output_folder + experiment_name + '/' + experiment_name + '_' + str(exp_num) + '/'
+    exp_output_folder = output_folder + '/' + experiment_name + '_' + str(exp_num) + '/'
 
     # latest_pickle_path = alg_utils.find_latest_population_pickle(exp_output_folder)
     # print(latest_pickle_path)
