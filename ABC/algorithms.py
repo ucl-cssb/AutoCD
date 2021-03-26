@@ -557,9 +557,31 @@ class ABC:
                     print("Invalid distance function set, quitting... ")
                     exit()
 
+
+                n_spaces = self.population_size - self.population_accepted_count
+                # # If we have more accepted than spaces, set some to false
+                if n_spaces < sum(batch_part_judgements):
+                    num_trim = sum(batch_part_judgements) - n_spaces
+                    trimmed_judgements = []
+
+                    for judgement in batch_part_judgements:
+                        if judgement:
+                            if sum(trimmed_judgements) < n_spaces:
+                                trimmed_judgements.append(True)
+
+                            else:
+                                trimmed_judgements.append(False)
+                        else: 
+                            trimmed_judgements.append(False)
+
+                    batch_part_judgements = trimmed_judgements
+
+
+
                 self.population_accepted_particle_distances += [part_d for part_d, judgement in
                                                 zip(batch_distances, batch_part_judgements)
                                                 if judgement]
+
 
                 accepted_particles = [p for p, judgement in zip(particles, batch_part_judgements) if judgement]
 
@@ -575,7 +597,8 @@ class ABC:
                 if self.final_epsilon == self.current_epsilon:
                     self.write_particle_distances(folder_name, model_refs, self.batch_num, self.population_number,
                                                   batch_part_judgements, batch_distances, only_accepted=True)
-
+                    # self.plot_accepted_particles(folder_name + '/simulation_plots', self.population_number, self.batch_num, batch_part_judgements, init_states, model_refs)
+                
                 end_time_write_distance = time.time()
 
                 # print("Write distance time elapsed: ", end_time_write_distance - start_time_write_distance)
