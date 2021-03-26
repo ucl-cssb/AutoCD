@@ -11,6 +11,10 @@ source /share/apps/source_files/python/python-3.7.2.source
 # Set output name
 OUTPUT_NAME=SSMC_0_SMC
 
+# Set username
+USERNAME=USER
+
+
 # Set config file path
 ABC_CONFIG=./config_files/ABC_SSCMC.yaml
 
@@ -19,6 +23,8 @@ export OMP_NUM_THREADS=3
 echo "$OMP_NUM_THREADS"
 
 AutoCD_DIR=$HOME/ucl-cssb/AutoCD
+
+
 
 cd $AutoCD_DIR
 
@@ -43,26 +49,26 @@ export C_INCLUDE_PATH=/share/apps/python-3.7.2-shared:${C_INCLUDE_PATH}
 
 # Kill function to clean tmp
 function finish {
-    rm -rf /scratch0/karkaria/${OUTPUT_NAME}_${SGE_TASK_ID}
+    rm -rf /scratch0/${USERNAME}/${OUTPUT_NAME}_${SGE_TASK_ID}
 }
 
 
 echo "Making output dir in tmpdir"
-mkdir -p /scratch0/karkaria/${OUTPUT_NAME}_${SGE_TASK_ID}/output
+mkdir -p /scratch0/${USERNAME}/${OUTPUT_NAME}_${SGE_TASK_ID}/output
 
 
 echo "copying inputfiles to tmpdir"
-cp -R ABC_input_files /scratch0/karkaria/${OUTPUT_NAME}_${SGE_TASK_ID}
+cp -R ABC_input_files /scratch0/${USERNAME}/${OUTPUT_NAME}_${SGE_TASK_ID}
 
 
-cp -R ABC /scratch0/karkaria/${OUTPUT_NAME}_${SGE_TASK_ID}
-cp -R config_files /scratch0/karkaria/${OUTPUT_NAME}_${SGE_TASK_ID}
-cp -R ModelSpaceGenerator /scratch0/karkaria/${OUTPUT_NAME}_${SGE_TASK_ID}
-cp -R data_analysis /scratch0/karkaria/${OUTPUT_NAME}_${SGE_TASK_ID}
+cp -R ABC /scratch0/${USERNAME}/${OUTPUT_NAME}_${SGE_TASK_ID}
+cp -R config_files /scratch0/${USERNAME}/${OUTPUT_NAME}_${SGE_TASK_ID}
+cp -R ModelSpaceGenerator /scratch0/${USERNAME}/${OUTPUT_NAME}_${SGE_TASK_ID}
+cp -R data_analysis /scratch0/${USERNAME}/${OUTPUT_NAME}_${SGE_TASK_ID}
 
-cp ./*.py /scratch0/karkaria/${OUTPUT_NAME}_${SGE_TASK_ID}
+cp ./*.py /scratch0/${USERNAME}/${OUTPUT_NAME}_${SGE_TASK_ID}
 
-cd /scratch0/karkaria/${OUTPUT_NAME}_${SGE_TASK_ID}
+cd /scratch0/${USERNAME}/${OUTPUT_NAME}_${SGE_TASK_ID}
 pwd
 ls
 
@@ -77,7 +83,7 @@ cd output
 pwd
 ls
 
-cp /scratch0/karkaria/${OUTPUT_NAME}_${SGE_TASK_ID}/output/*.tar.gz $AutoCD_DIR/output/
-rm -r /scratch0/karkaria/${OUTPUT_NAME}_${SGE_TASK_ID}
+cp /scratch0/${USERNAME}/${OUTPUT_NAME}_${SGE_TASK_ID}/output/*.tar.gz $AutoCD_DIR/output/
+rm -r /scratch0/${USERNAME}/${OUTPUT_NAME}_${SGE_TASK_ID}
 
 echo "finished"
