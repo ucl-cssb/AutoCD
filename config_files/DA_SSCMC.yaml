@@ -1,0 +1,3 @@
+experiment_name: SSCMC_0_SMC
+inputs_folder: './ABC_input_files/input_files_SSCMC/'
+output_folder: './output/'
