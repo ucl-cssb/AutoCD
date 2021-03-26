@@ -308,33 +308,7 @@ def make_long_format_model_space_report(pickle_path_list, output_dir):
     long_df.to_csv(file_path)
 
 
-def combine_population_pickles():
-    data_dir = '/media/behzad/DATA/experiments_data/BK_manu_data/three_species_stable_SMC_2/'
-    data_dir = '/media/behzad/DATA/experiments_data/spock_manu_data/spock_manu_stable_3_SMC/'
-    data_dir = '/media/behzad/DATA/experiments_data/BK_manu_data/two_species_stable_rej_1/'
-    # data_dir = '/media/behzad/DATA/experiments_data/spock_manu_data/spock_manu_stable_2_SMC_rej/'
-    data_dir = '/media/behzad/DATA/experiments_data/BK_manu_data/three_species_stable_rej_1/'
-    data_dir = '/media/behzad/DATA/experiments_data/spock_manu_data/spock_manu_surv_SMC_1/'
-    data_dir = '/media/behzad/DATA/experiments_data/spock_manu_data/spock_manu_stable_SMC_3/'
-    data_dir = '/media/behzad/DATA/experiments_data/spock_manu_data/spock_manu_stable_3_P2/'
-    data_dir = '/media/behzad/DATA/experiments_data/spock_manu_data/spock_manu_surv_SMC_2/'
-    data_dir = '/media/behzad/DATA/experiments_data/spock_manu_data/spock_manu_stable_SMC_4/'
-    data_dir = '/media/behzad/DATA/experiments_data/BK_manu_data/two_species_SMC_stable_4/'
-    data_dir = '/media/behzad/DATA/experiments_data/BK_manu_data/three_species_surv_rej_1/'
-    data_dir = '/media/behzad/DATA/experiments_data/BK_manu_data/three_species_no_sk_1/'
-    data_dir = '/media/behzad/DATA/experiments_data/BK_manu_data/three_species_stable_6_rej_0/'
-    data_dir = '/media/behzad/DATA/experiments_data/BK_manu_data/two_species_3_rej_0/'
-    data_dir = '/media/behzad/DATA/experiments_data/BK_manu_data/three_species_6_stable_SMC_7/'
-    data_dir = '/media/behzad/DATA/experiments_data/BK_manu_data/three_species_6_stable_SMC_8/'
-    data_dir = '/Volumes/Samsung_T5/BK_manu_data_backup/raw_output/three_species_7_SMC_5/'
-    # data_dir = '/Volumes/Samsung_T5/BK_manu_data_backup/raw_output/two_species_5_SMC_0b/'
-    data_dir = '/Volumes/Samsung_T5/BK_manu_data_backup/raw_output/three_species_7_SMC_model_4119_1/'
-
-    # data_dir = '/media/behzad/DATA/experiments_data/spock_manu_data/spock_manu_surv_SMC_1/'
-    # data_dir = '/media/behzad/DATA/experiments_data/spock_manu_data/spock_limited_stable_SMC/'
-
-    # data_dir = './output/two_species_stable_4_SMC/'
-
+def combine_population_pickles(data_dir, n_chunks):
     exp_dirs = glob.glob(data_dir + "**/")
     population_pickles_list = []
 
@@ -349,10 +323,10 @@ def combine_population_pickles():
         if pickle_path:
             pickle_path_list.append(pickle_path)
 
-    pickle_path_list = pickle_path_list[:96]
+    pickle_path_list = pickle_path_list
     # make_long_format_model_space_report(pickle_path_list, data_dir)
 
-    split_pickle_paths = np.array_split(pickle_path_list, 3)
+    split_pickle_paths = np.array_split(pickle_path_list, n_chunks)
 
     print(len(pickle_path_list))
     print(np.shape(split_pickle_paths))
@@ -466,7 +440,7 @@ def combine_population_pickles():
             master_alg.model_space.count_dead_models()
 
             print("Generating model space report")
-            master_alg.model_space.model_space_report(chunk_out_dir, master_alg.batch_num, use_sum=False)
+            master_alg.model_space.model_space_report(chunk_out_dir, use_sum=False)
 
             # print("\n\n")
             # print("Current particle weights:")
